@@ -28,3 +28,17 @@ export default function Home({ posts = [] }) {
     </div>
   );
 }
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      posts: [
+        {
+          title: 'Hello World',
+          content: 'This is my first post',
+          createdAt: new Date().toISOString(),
+        },
+      ],
+    },
+  };
+}
