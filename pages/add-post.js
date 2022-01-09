@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Nav from '../components/Nav';
 
+import Nav from '../components/Nav';
 import styles from '../styles/Home.module.css';
 
 export default function AddPost() {
@@ -12,12 +12,38 @@ export default function AddPost() {
   const handlePost = async (e) => {
     e.preventDefault();
 
+    // reset error and message
     setError('');
     setMessage('');
 
-    if (!title || !content) {
-      setError('Title and content are required');
-      return;
+    // fields check
+    if (!title || !content) return setError('All fields are required');
+
+    // post structure
+    let post = {
+      title,
+      content,
+      published: false,
+      createdAt: new Date().toISOString(),
+    };
+    // save the post
+    let response = await fetch('/api/posts', {
+      method: 'POST',
+      body: JSON.stringify(post),
+    });
+
+    // get the data
+    let data = await response.json();
+
+    if (data.success) {
+      // reset the fields
+      setTitle('');
+      setContent('');
+      // set the message
+      return setMessage(data.message);
+    } else {
+      // set the error
+      return setError(data.message);
     }
   };
 
@@ -37,13 +63,13 @@ export default function AddPost() {
             </div>
           ) : null}
           <div className={styles.formItem}>
-            <label htmlFor="title">Title</label>
+            <label>Title</label>
             <input
               type="text"
-              id="title"
-              value={title}
+              name="title"
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Title"
+              value={title}
+              placeholder="title"
             />
           </div>
           <div className={styles.formItem}>
