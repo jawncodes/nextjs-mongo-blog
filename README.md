@@ -1,7 +1,20 @@
-# nextjs-x-blog
+# nextjs-mongo-blog
 
 > This repository contains a blog website powered by Next.js
 > Based on tutorial at https://www.section.io/engineering-education/build-nextjs-with-mongodb-and-deploy-on-vercel/
+
+Note: You must provide your own `.env.local` file in the root directory.
+
+Example `.env.local` file:
+
+```
+MONGODB_URI = "mongodb+srv://username:password@yourmongodbcluster"
+DB_NAME= "sample_posts"
+
+DEV_URL = "http://localhost:3000"
+
+PROD_URL = ""
+```
 
 ---
 
